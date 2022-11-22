@@ -1,15 +1,99 @@
-if 30 is the benchmark
-p1 = 67->78    after stemming: 51
-p2=52->66-> 50
-p3 = 37->59->30
-p4 = 71->84->63
-p5=39-> 51->33
-p6=23->53->32
-p7=37->44->26 //fail
+folder:
+okay01: 22
+okay02: 49
+okay03: 28
+okay04: 54
+okay05: 16
+okay06: 19
 
-okay6 = 1 -> 48->13
-okay5 = 3 -> 63->14
-okay4 = 24->39->35 //fail
-okay3 = 12->55->13
-okay2 = 40->33->45 //fail
-okay1 = 15->24->23
+plagiarism01:71
+plagiarism02:60
+plagiarism03:45
+plagiarism04:91
+plagiarism01:61
+plagiarism01:54
+plagiarism01:61
+
+Stemming:
+Folder:okay01
+24.137931034482758
+
+Folder:okay02
+49.333333333333336
+
+Folder:okay03
+30.612244897959183
+
+Folder:okay04
+57.377049180327866
+
+Folder:okay05
+16.5374677002584
+
+Folder:okay06
+19.951923076923077
+
+
+Folder: plagiarism01
+70.9090909090909
+
+Folder: plagiarism02
+60.46511627906976
+
+Folder: plagiarism03
+45.94594594594595
+
+Folder: plagiarism04
+91.04477611940298
+
+Folder: plagiarism05
+61.81818181818181
+
+Folder: plagiarism06
+57.89473684210527
+
+Folder: plagiarism07
+61.79401993355482
+
+Using stopwords
+Folder:okay01
+26.47058823529412
+
+Folder:okay02
+48.888888888888886
+
+Folder:okay03
+26.229508196721312
+
+Folder:okay04
+66.66666666666666
+
+Folder:okay05
+15.229885057471265
+
+Folder:okay06
+19.35483870967742
+
+
+Folder: plagiarism01
+57.57575757575758
+
+Folder: plagiarism02
+52.17391304347826
+
+Folder: plagiarism03
+41.42857142857143
+
+Folder: plagiarism04
+90.9090909090909
+
+Folder: plagiarism05
+62.295081967213115
+
+Folder: plagiarism06
+68.75
+
+Folder: plagiarism07
+59.24528301886792
+
+
