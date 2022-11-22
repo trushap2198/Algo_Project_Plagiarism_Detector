@@ -15,8 +15,9 @@ CLASSES = \
         KMP.java \
         Plagiarism_detector_LCS.java \
         PlagiarismChecker.java \
+        Detector_40192614.java
 
-MAIN = KMP
+MAIN = Detector_40192614.java
 
 default: classes
 
