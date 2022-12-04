@@ -17,53 +17,55 @@ public class Detector_40192614 {
         String s2;
         double plag = 0;
 
-        for (i = 1; i <= 6; ++i) {
-            final long startTime = System.currentTimeMillis();
-            System.out.println("Folder:okay0"+i);
-            line = "data/okay0" + i + "/1.txt,data/okay0" + i + "/2.txt";
-            fileArr = line.split(",");
-            s1 = readFile(fileArr[0]);
-            s2 = readFile(fileArr[1]);
-            if(isCodeFile(s1) && isCodeFile(s2)){
-                List<StringBuilder> str1 = preProcessCodeFiles(s1);
-                List<StringBuilder> str2 = preProcessCodeFiles(s2);
-                String[] str_array1  = Arrays.deepToString(str1.toArray()).replaceAll("\\[", "").replaceAll("\\]", "").split(",");
-                String[] str_array2 = Arrays.deepToString(str2.toArray()).replaceAll("\\[", "").replaceAll("\\]", "").split(",");
-                plag = detect_lcs(str_array1,str_array2,true);
-                if(plag>=55.00){
-                    isplag = 1;
-                }
-                
-            }
-
-            else if (isCodeFile(s1) || isCodeFile(s2)) {
-                System.out.println("One is code file other is not. Not Plagiarised");
-                isplag = 0;
-            }
-            else{
-                List<String> str1 = preProcessTextFiles(s1);
-                List<String> str2 = preProcessTextFiles(s2);
-                plag = detectLCSInTextFiles(str1,str2,false);
-                System.out.println("Plagiarism:" + plag);
-                if(plag>5.0){
-                    isplag = 1;
-                }
-            }
-            System.out.println( "Plagiarism percentage is:" + plag +". Hence the plag score is:"+ isplag + " \n\n");
-
-            final long endTime = System.currentTimeMillis();
-            System.out.println("Total execution time: " + (endTime - startTime) + " \n\n");
-
-        }
+//        for (i = 1; i <= 6; ++i) {
+//            final long startTime = System.currentTimeMillis();
+//            System.out.println("Folder:okay0"+i);
+//            line = "data/okay0" + i + "/1.txt,data/okay0" + i + "/2.txt";
+//            fileArr = line.split(",");
+//            s1 = readFile(fileArr[0]);
+//            s2 = readFile(fileArr[1]);
+//            if(isCodeFile(s1) && isCodeFile(s2)){
+//                List<StringBuilder> str1 = preProcessCodeFiles(s1);
+//                List<StringBuilder> str2 = preProcessCodeFiles(s2);
+//                String[] str_array1  = Arrays.deepToString(str1.toArray()).replaceAll("\\[", "").replaceAll("\\]", "").split(",");
+//                String[] str_array2 = Arrays.deepToString(str2.toArray()).replaceAll("\\[", "").replaceAll("\\]", "").split(",");
+//                plag = detect_lcs(str_array1,str_array2,true);
+//                if(plag>=55.00){
+//                    isplag = 1;
+//                }
 //
-        for(i = 1; i <= 7; ++i) {
-            final long startTime = System.currentTimeMillis();
+//            }
+//
+//            else if (isCodeFile(s1) || isCodeFile(s2)) {
+//                System.out.println("One is code file other is not. Not Plagiarised");
+//                isplag = 0;
+//            }
+//            else{
+//                List<String> str1 = preProcessTextFiles(s1);
+//                List<String> str2 = preProcessTextFiles(s2);
+//                plag = detectLCSInTextFiles(str1,str2,false);
+//                System.out.println("Plagiarism:" + plag);
+//                if(plag>5.0){
+//                    isplag = 1;
+//                }
+//            }
+//            System.out.println( "Plagiarism percentage is:" + plag +". Hence the plag score is:"+ isplag + " \n\n");
+//
+//            final long endTime = System.currentTimeMillis();
+//            System.out.println("Total execution time: " + (endTime - startTime) + " \n\n");
+//
+//        }
+//
+        for(i = 8; i <= 9; ++i) {
+            long startTime = 0L;
             System.out.println("Folder: plagiarism0"+i);
             line = "data/plagiarism0" + i + "/1.txt,data/plagiarism0" + i + "/2.txt";
             fileArr = line.split(",");
             s1 = readFile(fileArr[0]);
             s2 = readFile(fileArr[1]);
             if(isCodeFile(s1) && isCodeFile(s2)){
+                System.out.println("here in code");
+                startTime = System.currentTimeMillis();
                 List<StringBuilder> str1 = preProcessCodeFiles(s1);
                 List<StringBuilder> str2 = preProcessCodeFiles(s2);
                 String[] str_array1  = Arrays.deepToString(str1.toArray()).replaceAll("\\[", "").replaceAll("\\]", "").split(",");
@@ -80,11 +82,13 @@ public class Detector_40192614 {
                 isplag = 0;
             }
             else{
+                startTime = System.currentTimeMillis();
                 List<String> str1 = preProcessTextFiles(s1);
                 List<String> str2 = preProcessTextFiles(s2);
                 plag = detectLCSInTextFiles(str1,str2,false);
+                System.out.println("Detection done");
                 System.out.println("Plagiarism:" + plag);
-                if(plag>5.0){
+                if(plag>=5.0){
                     isplag = 1;
                 }
             }
@@ -97,6 +101,7 @@ public class Detector_40192614 {
 
     private static double detectLCSInTextFiles(List<String> str1, List<String> str2, boolean iscodeFile) {
 
+        System.out.println("In detection");
         List<String> string1;
         List<String> string2;
 
@@ -111,8 +116,10 @@ public class Detector_40192614 {
             string1 = str1;
             string2 = str2;
         }
-        for(String sent1:string1){
+        for (String sent1:string1){
             word_size+=sent1.length();
+        }
+        for(String sent1:string1){
             max_match_in_one_sentence = 0.00;
             for(String sent2:string2){
                 match = detect_lcs(sent1.split(" "),sent2.split(" "),iscodeFile);
@@ -121,11 +128,18 @@ public class Detector_40192614 {
                 }
             }
             total_match+=max_match_in_one_sentence;
+            //the breakout
+            if((total_match/word_size*100) > 5.0){
+                System.out.println("Breakout");
+                return total_match/word_size*100;
+            }
         }
+        System.out.println("Exit detect");
         return total_match/word_size*100;
     }
 
     private static List<String> preProcessTextFiles(String s2) {
+        System.out.println("in prepreprocess");
 
         String str = s2.replaceAll("[,;:'!?$%\\^*]","");
         List<String> sentences = new ArrayList<>();
@@ -151,6 +165,7 @@ public class Detector_40192614 {
                 sentences.addAll(Arrays.stream(para.split("\\.")).collect(Collectors.toList()));
             }
         }
+        System.out.println("Done preprocess");
         return sentences;
     }
 
@@ -259,34 +274,35 @@ public class Detector_40192614 {
 
     private static String readFile(String fileName) {
         String contents = "";
-
         try {
             RandomAccessFile fin = new RandomAccessFile(new File(fileName), "r");
 
             for (int b = fin.read(); b != -1; b = fin.read()) {
+                //System.out.println("Okay");
                 contents = contents + (char) b;
             }
         } catch (Exception var4) {
             System.err.println("Trouble reading from: " + fileName);
         }
-
+        //System.out.println("CON"+ contents);
         return contents;
     }
 
-    private static boolean isCodeFile(String text){
-        ArrayList<String> keywords = new ArrayList<>(Arrays.asList("#include","elif","class","void","bool","h>","int","char","chr","return","char","cout","<<",">>","==","!=",">=","<=","{","}","=","++","--","<",">","++","--","switch","case","()","system","out","println","print", "boolean", "static","void"));
-        int count = 0;
-        for(String str: text.split(" ")){
-            if (keywords.contains(str))
-            {
+    private static boolean isCodeFile(String text) {
+        ArrayList<String> keywords = new ArrayList<>(Arrays.asList("#include", "elif", "class", "void", "bool", "h>", "int", "char", "chr", "return", "char", "cout", "<<", ">>", "==", "!=", ">=", "<=", "{", "}", "=", "++", "--", "<", ">", "++", "--", "switch", "case", "()", "system", "out", "println", "print", "boolean", "static", "void"));
+        double count = 0.00;
+        for (String str : text.split(" ")) {
+            if (keywords.contains(str)) {
                 count++;
+            }
+            if (count / text.length() >= 0.01) {
+                return true;
             }
         }
         //System.out.println("This file has "+ count + " codewords out of " + text.length() + " words");
-        if(count>=30){
+        if (count / text.length() >= 0.01) {
             return true;
-        }
-        else
+        } else
             return false;
     }
 
